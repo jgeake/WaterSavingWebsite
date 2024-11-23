@@ -122,3 +122,16 @@ document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('results').textContent = '';
     document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
 });
+
+
+
+function sendEmail() {
+    const recipient = "your-email@example.com"; // Replace with your email address
+    const subject = encodeURIComponent("Question About the Water Usage Quiz");
+    const body = encodeURIComponent(
+        "Hello,\n\nI have a question about the water usage quiz. Could you please assist me with the following?\n\n[Write your question here]\n\nThank you!"
+    );
+
+    const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+}
