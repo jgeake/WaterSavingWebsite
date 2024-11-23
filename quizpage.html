@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h1>Water Usage Quiz</h1>
+        <h2>Calculate Your Daily Water Consumption</h2>
+        <h4>Answer the questions below to estimate how much water you consume in a day.</h4>
+        <div id="quiz"></div>
+
+        <!-- Hidden buttons that are shown only after calculation -->
+        <h2 id="guessHeader" style="display: none;">Make your guess!</h2>
+        <button id="guessBelow" onclick="checkGuess('below')" style="display: none;">Guess Below Sustainable Limit</button>
+        <button id="guessAbove" onclick="checkGuess('above')" style="display: none;">Guess Above Sustainable Limit</button>
+
+        <!-- Buttons for calculating results, resetting, and home -->
+        <button id="submit">Calculate Water Usage</button>
+        <button id="reset">Retake the Quiz</button>
+        <button onclick="window.location.href='water.html'">Home</button>
+        
+        <!-- Results will be displayed here -->
+        <div id="results"></div>
+    </div>
+
+    <script src="js.js"></script>
+</body>
+</html>
