@@ -126,7 +126,7 @@ document.getElementById('reset').addEventListener('click', () => {
 
 
 function sendEmail() {
-    const recipient = "your-email@example.com"; // Replace with your email address
+    const recipient = "jgeake15@icloud.com"; // Replace with your email address
     const subject = encodeURIComponent("Question About the Water Usage Quiz");
     const body = encodeURIComponent(
         "Hello,\n\nI have a question about the water usage quiz. Could you please assist me with the following?\n\n[Write your question here]\n\nThank you!"
