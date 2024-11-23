@@ -22,7 +22,9 @@
         <!-- Buttons for calculating results, resetting, and home -->
         <button id="submit">Calculate Water Usage</button>
         <button id="reset">Retake the Quiz</button>
-        <button onclick="window.location.href='index.html'">Home</button>
+        document.querySelector("button[onclick]").addEventListener("click", () => {
+            window.location.href = 'index.html';
+        });
         
         <!-- Results will be displayed here -->
         <div id="results"></div>
