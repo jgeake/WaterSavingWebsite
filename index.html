@@ -17,6 +17,18 @@
         <!--button to quiz page#-->
         <button onclick="window.location.href='quizpage.html'">Take quiz?</button>
         <button id="contactButton" onclick="sendEmail()">Ask Us a Question</button>
+            <script>
+        function sendEmail() {
+            const recipient = "jgeake15@icloud.com"; // Replace with your email address
+            const subject = encodeURIComponent("Question About the Water Usage Quiz");
+            const body = encodeURIComponent(
+                "Hello,\n\nI have a question about the water usage quiz. Could you please assist me with the following?\n\n[Write your question here]\n\nThank you!"
+            );
+
+            const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
 
         
     </div>
