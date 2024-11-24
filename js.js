@@ -135,3 +135,57 @@ function sendEmail() {
     const mailtoLink = `mailto:${recipient}?subject=${subject}&body=${body}`;
     window.location.href = mailtoLink;
 }
+
+function setupShareButton(totalWaterUsage, yourGlobalWaterUsage) {
+    const shareButton = document.getElementById('shareButton');
+    const text = `I just completed a water usage quiz! My daily water usage is ${totalWaterUsage.toFixed(2)} liters. If everyone used the same, the world would use ${yourGlobalWaterUsage.toFixed(2)} liters annually. Take the quiz here: https://jgeake.github.io/WaterSavingWebsite/index.html`;
+
+    // LinkedIn Share URL
+    const linkedinShareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent('https://jgeake.github.io/WaterSavingWebsite/index.html')}&title=Water Usage Quiz&summary=${encodeURIComponent(text)}&source=WaterSavingWebsite`;
+
+    // WhatsApp Share URL
+    const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+
+    // Update button event listener
+    shareButton.addEventListener('click', () => {
+        // Prompt user to choose where to share
+        const platform = confirm("Click OK to share on WhatsApp, or Cancel to share on LinkedIn.") 
+            ? whatsappShareUrl 
+            : linkedinShareUrl;
+        
+        window.open(platform, '_blank');
+    });
+
+    shareButton.style.display = 'inline'; // Show the button after results are displayed
+}
+
+// Call this function in your `calculateWaterUsage` function after displaying results
+setupShareButton(totalWaterUsage, yourGlobalWaterUsage);
+
+
+function submitSuggestion() {
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const questionSuggestion = document.getElementById('questionSuggestion').value.trim();
+
+    // Check if the suggestion field is empty
+    if (!questionSuggestion) {
+        document.getElementById('formMessage').innerHTML = `<span style="color: red;">Please enter a question suggestion before submitting.</span>`;
+        return;
+    }
+
+    // Store the suggestion locally (browser console for now)
+    const formData = {
+        name: name || 'Anonymous',
+        email: email || 'Not provided',
+        questionSuggestion
+    };
+
+    console.log("Suggestion submitted:", formData);
+
+    // Display a confirmation message to the user
+    document.getElementById('formMessage').innerHTML = `<span style="color: green;">Thank you for your suggestion! We'll review it shortly.</span>`;
+
+    // Clear the form fields
+    document.getElementById('suggestionForm').reset();
+}
