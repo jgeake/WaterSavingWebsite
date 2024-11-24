@@ -3,51 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Quiz</title>
-    <link rel="stylesheet" href="css.css">
+    <title>The Water Forum</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="waterForum">
-        <div class="header-container">
-            <h2>Water Forum</h1>
-            <button onclick="window.location.href='index.html'">Home</button>
-        </div>
-        <p>Share your thoughts, tips, or questions about water conservation!</p>
-        <form id="forumForm">
-            <textarea id="forumMessage" rows="4" placeholder="Type your message here..."></textarea>
-            <br>
-            <button type="button" id="postMessageButton">Post Message</button>
-            <button type="button" onclick="window.location.href='quizpage.html'">Take quiz?</button>
-        </form>
-        
-        <h3>Discussion</h3>
-        <div id="forumDiscussion">
-            <!-- Messages will appear here -->
-        </div>
+
+    <div class="forum">
+        <h2>Water Forum</h2>
+
+
+
+        <div id="disqus_thread"></div>
+        <script>
+            /**
+            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+            /*
+            var disqus_config = function () {
+            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+            */
+            (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = 'https://thewaterquiz.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
 
-    <script>
-        document.getElementById('postMessageButton').addEventListener('click', function () {
-            const forumMessage = document.getElementById('forumMessage').value.trim();
 
-            // Validate message
-            if (forumMessage === '') {
-                alert('Please enter a message before posting.');
-                return;
-            }
-
-            // Create a new message element
-            const messageElement = document.createElement('p');
-            messageElement.textContent = forumMessage;
-
-            // Append the message to the discussion area
-            const discussion = document.getElementById('forumDiscussion');
-            discussion.appendChild(messageElement);
-
-            // Clear the input field
-            document.getElementById('forumMessage').value = '';
-        });
-    </script>
-    <script src="js.js"></script>
+    <!-- Your app's JavaScript -->
+    <script src="app.js"></script>
 </body>
 </html>
