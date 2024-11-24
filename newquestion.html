@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Water Quiz</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    
+    <div id="suggestionFormContainer">
+    <h2>Submit a Question Suggestion</h2>
+    <form id="suggestionForm">
+        <label for="name">Your Name (optional):</label><br>
+        <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
+
+        <label for="email">Your Email (optional):</label><br>
+        <input type="email" id="email" name="email" placeholder="Enter your email"><br><br>
+
+        <label for="questionSuggestion">Question Suggestion:</label><br>
+        <textarea id="questionSuggestion" name="questionSuggestion" rows="4" cols="50" placeholder="Write your question suggestion here" required></textarea><br><br>
+
+        <button type="button" onclick="submitSuggestion()">Submit Suggestion</button>
+    </form>
+    <div id="formMessage" style="margin-top: 10px;"></div>
+    </div>
+
+    <script src="js.js"></script>
+</body>
+</html>
