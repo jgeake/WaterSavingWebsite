@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .quiz-container {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 400px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2>Carbon Quiz</h2>
+        <p>What is the largest source of carbon emissions globally?</p>
+        <button onclick="showResult('A')">A. Transportation</button>
+        <button onclick="showResult('B')">B. Agriculture</button>
+        <button onclick="showResult('C')">C. Energy production</button>
+        <button onclick="showResult('D')">D. Deforestation</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function showResult(answer) {
+            const correctAnswer = 'C';
+            const resultElement = document.getElementById('result');
+            if (answer === correctAnswer) {
+                resultElement.textContent = "Correct! Energy production is the largest source of carbon emissions.";
+            } else {
+                resultElement.textContent = "Incorrect. The correct answer is C. Energy production.";
+            }
+        }
+    </script>
+</body>
+</html>
