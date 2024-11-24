@@ -63,3 +63,21 @@ button:hover {
 #suggestionForm button:hover {
     background-color: #005582;
 }
+
+.header-container {
+    text-align: left; /* Ensures horizontal alignment */
+}
+
+.header-container h1,
+.header-container button {
+    display: inline-block; /* Makes elements appear in the same line */
+    vertical-align: middle; /* Aligns them vertically */
+    margin: 0; /* Removes extra margin */
+}
+
+.header-container h2,
+.header-container button {
+    display: inline-block; /* Makes elements appear in the same line */
+    vertical-align: middle; /* Aligns them vertically */
+    margin: 0; /* Removes extra margin */
+}
