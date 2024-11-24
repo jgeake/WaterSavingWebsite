@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div id="waterForum">
+        <div class="header-container">
+            <h2>Water Forum</h1>
+            <button onclick="window.location.href='index.html'">Home</button>
+        </div>
+        <p>Share your thoughts, tips, or questions about water conservation!</p>
+        <form id="forumForm">
+            <textarea id="forumMessage" rows="4" placeholder="Type your message here..."></textarea>
+            <br>
+            <button type="button" id="postMessageButton">Post Message</button>
+            <button type="button" onclick="window.location.href='quizpage.html'">Take quiz?</button>
+        </form>
+        
+        <h3>Discussion</h3>
+        <div id="forumDiscussion">
+            <!-- Messages will appear here -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('postMessageButton').addEventListener('click', function () {
+            const forumMessage = document.getElementById('forumMessage').value.trim();
+
+            // Validate message
+            if (forumMessage === '') {
+                alert('Please enter a message before posting.');
+                return;
+            }
+
+            // Create a new message element
+            const messageElement = document.createElement('p');
+            messageElement.textContent = forumMessage;
+
+            // Append the message to the discussion area
+            const discussion = document.getElementById('forumDiscussion');
+            discussion.appendChild(messageElement);
+
+            // Clear the input field
+            document.getElementById('forumMessage').value = '';
+        });
+    </script>
+    <script src="js.js"></script>
+</body>
+</html>
