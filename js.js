@@ -66,29 +66,42 @@ function buildQuiz() {
     document.getElementById('quiz').innerHTML = output.join('');
 }
 
-document.getElementById("calculateResultsButton").addEventListener("click", () => {
-    // Collect the form data
-    const formData = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        answers: document.getElementById("answers").value.trim(),
+// Function to send email using EmailJS
+function sendEmail(results) {
+    const userName = "Your Name"; // Or you can capture this from the user input
+    const userEmail = "jgeake15@icloud.com"; // Replace with your email or capture it from the form
+
+    // Prepare the email data
+    const templateParams = {
+        from_name: userName,
+        from_email: userEmail,
+        results: results
     };
 
-    // Validate the form data
-    if (!formData.name || !formData.email || !formData.answers) {
-        alert("Please fill out all fields before submitting.");
+    // Send the email using EmailJS
+    emailjs.send('service_5bygf3d', 'template_bfp52q9', templateParams) // Replace with your EmailJS service ID and template ID
+        .then(function(response) {
+            console.log('Email sent successfully!', response);
+        }, function(error) {
+            console.error('Email sending failed...', error);
+        });
+}
+
+// Function to calculate results (you can replace this with your actual calculation logic)
+document.getElementById('submit').addEventListener('click', function () {
+    // Capture the quiz results (replace this with your actual results calculation logic)
+    const results = document.getElementById('results').innerText; // Assuming the results are in the #results div
+
+    if (!results) {
+        alert("Please complete the quiz before calculating results.");
         return;
     }
 
-    // Use EmailJS to send the form data
-    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formData)
-        .then(() => {
-            alert("Email sent successfully!");
-        })
-        .catch((error) => {
-            console.error("Error sending email:", error);
-            alert("Failed to send email. Please try again.");
-        });
+    // Send results via email
+    sendEmail(results);
+
+    // Optionally, you can also display a success message
+    alert("Your results have been emailed to you!");
 });
 
 function calculateWaterUsage() {
