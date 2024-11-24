@@ -161,19 +161,12 @@ function setupShareButton(totalWaterUsage, totalGlobalWaterUsage) {
 
     const linkedinShareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent('https://jgeake.github.io/WaterSavingWebsite/index.html')}&title=Water Usage Quiz&summary=${encodeURIComponent(text)}&source=WaterSavingWebsite`;
     const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
-    const imessageShareUrl = `sms:&body=${encodeURIComponent(text)}`;
 
     shareButton.style.display = 'inline';
     shareButton.innerHTML = `
         <button id="whatsappShare">Share on WhatsApp</button>
         <button id="linkedinShare">Share on LinkedIn</button>
     `;
-
-    const imessageButton = document.createElement('button');
-    imessageButton.id = 'imessageShare';
-    imessageButton.textContent = 'Share via iMessage';
-    imessageButton.onclick = () => window.open(imessageShareUrl, '_blank');
-    shareButton.appendChild(imessageButton);
 
     document.getElementById('whatsappShare').onclick = () => window.open(whatsappShareUrl, '_blank');
     document.getElementById('linkedinShare').onclick = () => window.open(linkedinShareUrl, '_blank');
