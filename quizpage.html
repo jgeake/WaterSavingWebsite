@@ -22,22 +22,20 @@
         <button id="guessBelow" onclick="checkGuess('below')" style="display: none;">Guess Below Sustainable Limit</button>
         <button id="guessAbove" onclick="checkGuess('above')" style="display: none;">Guess Above Sustainable Limit</button>
         
-        
         <!-- Results will be displayed here -->
         <div id="results"></div>
 
+        <!-- EmailJS Library -->
         <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
         <script>
           emailjs.init("YOUR_USER_ID"); // Replace with your actual User ID
         </script>
 
-        <button id="shareButton" style="display: none;">Share Your Results</button>
-
-        <button onclick="window.location.href='newquestion.html'">New Question Suggestions?</button>
-        <!-- Buttons for calculating results, resetting, and home -->
+        <!-- Results display and email sending -->
         <button id="submit">Calculate Water Usage</button>
-        <button id="reset">Retake the Quiz</button> 
-        <button onclick="window.location.href='index.html'">Home</button>
+        <button id="reset">Retake the Quiz</button>
+        <button onclick="window.location.href='newquestion.html'">New Question Suggestions?</button>
+
     </div>
     <script src="js.js"></script>
 </body>
