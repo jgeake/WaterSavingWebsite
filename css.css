@@ -28,3 +28,38 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+
+
+#suggestionFormContainer {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 500px;
+}
+
+#suggestionForm input, #suggestionForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#suggestionForm button {
+    padding: 10px 15px;
+    background-color: #0077b5; /* LinkedIn blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#suggestionForm button:hover {
+    background-color: #005582;
+}
