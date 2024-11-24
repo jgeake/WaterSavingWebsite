@@ -18,15 +18,18 @@
         <h2 id="guessHeader" style="display: none;">Make your guess!</h2>
         <button id="guessBelow" onclick="checkGuess('below')" style="display: none;">Guess Below Sustainable Limit</button>
         <button id="guessAbove" onclick="checkGuess('above')" style="display: none;">Guess Above Sustainable Limit</button>
-
+        
+        <button onclick="window.location.href='newquestion.html'">New Question Suggestions?</button>
         <!-- Buttons for calculating results, resetting, and home -->
         <button id="submit">Calculate Water Usage</button>
         <button id="reset">Retake the Quiz</button>
         <button onclick="window.location.href='index.html'">Home</button>
         
+
         <!-- Results will be displayed here -->
         <div id="results"></div>
     </div>
+    <button id="shareButton" style="display: none;">Share Your Results</button>
 
     <script src="js.js"></script>
 </body>
