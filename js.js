@@ -67,61 +67,89 @@ function buildQuiz() {
 }
 
 function calculateWaterUsage() {
-    showShareButton();
+    const shareButton = document.getElementById('shareButton');
+    shareButton.style.display = 'inline'; // Make the button visible
+
     const answerContainers = document.querySelectorAll('.answers');
     let totalWaterUsage = 0;
     const worldPopulation = 8e9; // 8 billion people
+    const sustainableWaterUsage = 4e15; // 4 quadrillion liters annually
+    const globalWaterReserves = 1.4e18; // Estimated total water reserves in liters
 
     quizQuestions.forEach((currentQuestion, questionNumber) => {
         const answerContainer = answerContainers[questionNumber];
         const userAnswer = answerContainer.querySelector(`input[name=question${questionNumber}]`).value;
         const numericAnswer = parseFloat(userAnswer);
-        
+
         // Check if the answer is a valid number and not empty
         if (!isNaN(numericAnswer) && userAnswer.trim() !== '') {
             totalWaterUsage += currentQuestion.waterUsage(numericAnswer);
         }
     });
 
-    // Display the user's estimated daily water usage
-    document.getElementById('results').innerHTML = 
-        `Your estimated daily water usage is <strong>${totalWaterUsage.toFixed(2)}</strong> liters. ` +
-        `If everyone used your amount of water, the world would use <strong>${(totalWaterUsage * worldPopulation).toFixed(2)}</strong> liters every year.`;
-
-    // Determine if the total global water usage is above or below sustainable limits
-    const sustainableWaterUsage = 4e15; // 4,000 trillion liters
+    // Calculate global water usage
     const totalGlobalWaterUsage = totalWaterUsage * worldPopulation;
-    const isAboveSustainableLimit = totalGlobalWaterUsage > sustainableWaterUsage;
-    window.actualResult = isAboveSustainableLimit;
 
-    const comparison = isAboveSustainableLimit ? 
-        "The total water usage for 8 billion people exceeds sustainable limits." : 
-        "The total water usage for 8 billion people is within sustainable limits.";
-    
-    // Add the comparison result to the displayed message
-    document.getElementById('results').innerHTML += `<br>${comparison}`;
+    // Determine if the global water usage is sustainable
+    const isSustainable = totalGlobalWaterUsage <= sustainableWaterUsage;
+    const yearsToDepletion = (globalWaterReserves / totalGlobalWaterUsage).toFixed(2);
 
-    // Show the guess buttons after displaying the results
+    // Store results in a global object
+    window.calculatedResults = {
+        totalWaterUsage: totalWaterUsage.toFixed(2),
+        totalGlobalWaterUsage: totalGlobalWaterUsage.toFixed(2),
+        isSustainable,
+        yearsToDepletion,
+    };
+
+    // Hide the results initially
+    document.getElementById('results').style.display = 'none';
+
+    // Show the guess buttons and prompt user to guess
     document.getElementById('guessHeader').style.display = 'block';
     document.getElementById('guessBelow').style.display = 'inline';
     document.getElementById('guessAbove').style.display = 'inline';
 }
 
 function checkGuess(guess) {
-    const correct = window.actualResult; // Get the actual result (true if above, false if below)
-    
-    if ((guess === 'below' && !correct) || (guess === 'above' && correct)) {
+    const results = window.calculatedResults;
+    if (!results) {
+        alert("Please calculate your water usage first.");
+        return;
+    }
+
+    // Check if the user's guess is correct
+    const correct = results.isSustainable;
+    if ((guess === 'below' && correct) || (guess === 'above' && !correct)) {
         alert("Correct! Your guess was right.");
     } else {
         alert("Oops! Your guess was wrong.");
     }
+
+    // Display the results after the guess
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.style.display = 'block';
+    resultsContainer.innerHTML =
+        `Your estimated daily water usage is <strong>${results.totalWaterUsage}</strong> liters. ` +
+        `If everyone used your amount of water, the world would use <strong>${results.totalGlobalWaterUsage}</strong> liters annually.<br>` +
+        `Is this sustainable? <strong>${results.isSustainable ? 'Yes' : 'No'}</strong><br>` +
+        `Years to depletion: <strong>${results.yearsToDepletion}</strong>`;
+
+    // Hide the guess buttons after the results are shown
+    document.getElementById('guessHeader').style.display = 'none';
+    document.getElementById('guessBelow').style.display = 'none';
+    document.getElementById('guessAbove').style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', buildQuiz);
-document.getElementById('submit').addEventListener('click', calculateWaterUsage);
-document.getElementById('reset').addEventListener('click', () => {
-    document.getElementById('results').textContent = '';
-    document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
+
+document.getElementById('submit').addEventListener('click', () => {
+    calculateWaterUsage();
+
+    // Remove any old results from the DOM to prevent duplication
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.style.display = 'none';
+    resultsContainer.innerHTML = '';
 });
 
 
@@ -191,8 +219,47 @@ function submitSuggestion() {
     document.getElementById('suggestionForm').reset();
 }
 
-// Function to unhide the share button
-function showShareButton() {
-    const shareButton = document.getElementById('shareButton');
-    shareButton.style.display = 'inline'; // Make the button visible
-}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const forumForm = document.getElementById('forumForm');
+    const forumMessage = document.getElementById('forumMessage');
+    const forumDiscussion = document.getElementById('forumDiscussion');
+
+    // Load saved posts from localStorage
+    function loadPosts() {
+        const savedPosts = JSON.parse(localStorage.getItem('waterForumPosts')) || [];
+        savedPosts.forEach(post => {
+            addPostToDiscussion(post);
+        });
+    }
+
+    // Save posts to localStorage
+    function savePost(post) {
+        const savedPosts = JSON.parse(localStorage.getItem('waterForumPosts')) || [];
+        savedPosts.push(post);
+        localStorage.setItem('waterForumPosts', JSON.stringify(savedPosts));
+    }
+
+    // Add a post to the discussion area
+    function addPostToDiscussion(post) {
+        const postDiv = document.createElement('div');
+        postDiv.className = 'forumPost';
+        postDiv.textContent = post;
+        forumDiscussion.appendChild(postDiv);
+    }
+
+    // Handle posting a new message
+    document.getElementById('postMessageButton').addEventListener('click', () => {
+        const message = forumMessage.value.trim();
+        if (message) {
+            addPostToDiscussion(message);
+            savePost(message);
+            forumMessage.value = ''; // Clear the input field
+        } else {
+            alert('Please type a message before posting.');
+        }
+    });
+
+    // Load existing posts when the page loads
+    loadPosts();
+});
