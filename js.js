@@ -67,6 +67,7 @@ function buildQuiz() {
 }
 
 function calculateWaterUsage() {
+    showShareButton();
     const answerContainers = document.querySelectorAll('.answers');
     let totalWaterUsage = 0;
     const worldPopulation = 8e9; // 8 billion people
@@ -188,4 +189,10 @@ function submitSuggestion() {
 
     // Clear the form fields
     document.getElementById('suggestionForm').reset();
+}
+
+// Function to unhide the share button
+function showShareButton() {
+    const shareButton = document.getElementById('shareButton');
+    shareButton.style.display = 'inline'; // Make the button visible
 }
