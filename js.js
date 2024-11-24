@@ -67,9 +67,6 @@ function buildQuiz() {
 }
 
 function calculateWaterUsage() {
-    const shareButton = document.getElementById('shareButton');
-    shareButton.style.display = 'inline'; // Make the button visible
-
     const answerContainers = document.querySelectorAll('.answers');
     let totalWaterUsage = 0;
     const worldPopulation = 8e9; // 8 billion people
@@ -81,16 +78,12 @@ function calculateWaterUsage() {
         const userAnswer = answerContainer.querySelector(`input[name=question${questionNumber}]`).value;
         const numericAnswer = parseFloat(userAnswer);
 
-        // Check if the answer is a valid number and not empty
         if (!isNaN(numericAnswer) && userAnswer.trim() !== '') {
             totalWaterUsage += currentQuestion.waterUsage(numericAnswer);
         }
     });
 
-    // Calculate global water usage
     const totalGlobalWaterUsage = totalWaterUsage * worldPopulation;
-
-    // Determine if the global water usage is sustainable
     const isSustainable = totalGlobalWaterUsage <= sustainableWaterUsage;
     const yearsToDepletion = (globalWaterReserves / totalGlobalWaterUsage).toFixed(2);
 
@@ -102,14 +95,14 @@ function calculateWaterUsage() {
         yearsToDepletion,
     };
 
-    // Hide the results initially
+    // Display results
+    setupShareButton(totalWaterUsage, totalGlobalWaterUsage);
     document.getElementById('results').style.display = 'none';
-
-    // Show the guess buttons and prompt user to guess
     document.getElementById('guessHeader').style.display = 'block';
     document.getElementById('guessBelow').style.display = 'inline';
     document.getElementById('guessAbove').style.display = 'inline';
 }
+
 
 function checkGuess(guess) {
     const results = window.calculatedResults;
@@ -118,35 +111,32 @@ function checkGuess(guess) {
         return;
     }
 
-    // Check if the user's guess is correct
     const correct = results.isSustainable;
-    if ((guess === 'below' && correct) || (guess === 'above' && !correct)) {
-        alert("Correct! Your guess was right.");
-    } else {
-        alert("Oops! Your guess was wrong.");
-    }
+    const message = (guess === 'below' && correct) || (guess === 'above' && !correct)
+        ? "Correct! Your guess was right."
+        : "Oops! Your guess was wrong.";
+    alert(message);
 
-    // Display the results after the guess
     const resultsContainer = document.getElementById('results');
     resultsContainer.style.display = 'block';
-    resultsContainer.innerHTML =
-        `Your estimated daily water usage is <strong>${results.totalWaterUsage}</strong> liters. ` +
-        `If everyone used your amount of water, the world would use <strong>${results.totalGlobalWaterUsage}</strong> liters annually.<br>` +
-        `Is this sustainable? <strong>${results.isSustainable ? 'Yes' : 'No'}</strong><br>` +
-        `Years to depletion: <strong>${results.yearsToDepletion}</strong>`;
+    resultsContainer.innerHTML = `
+        Your estimated daily water usage is <strong>${results.totalWaterUsage}</strong> liters.<br>
+        Is this sustainable? <strong>${results.isSustainable ? 'Yes' : 'No'}</strong><br>
+        Years to depletion: <strong>${results.yearsToDepletion}</strong>
+    `;
 
-    // Hide the guess buttons after the results are shown
     document.getElementById('guessHeader').style.display = 'none';
     document.getElementById('guessBelow').style.display = 'none';
     document.getElementById('guessAbove').style.display = 'none';
 }
+
+
 
 document.addEventListener('DOMContentLoaded', buildQuiz);
 
 document.getElementById('submit').addEventListener('click', () => {
     calculateWaterUsage();
 
-    // Remove any old results from the DOM to prevent duplication
     const resultsContainer = document.getElementById('results');
     resultsContainer.style.display = 'none';
     resultsContainer.innerHTML = '';
@@ -165,31 +155,30 @@ function sendEmail() {
     window.location.href = mailtoLink;
 }
 
-function setupShareButton(totalWaterUsage, yourGlobalWaterUsage) {
+function setupShareButton(totalWaterUsage, totalGlobalWaterUsage) {
     const shareButton = document.getElementById('shareButton');
-    const text = `I just completed a water usage quiz! My daily water usage is ${totalWaterUsage.toFixed(2)} liters. If everyone used the same, the world would use ${yourGlobalWaterUsage.toFixed(2)} liters annually. Take the quiz here: https://jgeake.github.io/WaterSavingWebsite/index.html`;
+    const text = `I just completed a water usage quiz! My daily water usage is ${totalWaterUsage.toFixed(2)} liters. Take the quiz here: https://jgeake.github.io/WaterSavingWebsite/index.html`;
 
-    // LinkedIn Share URL
     const linkedinShareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent('https://jgeake.github.io/WaterSavingWebsite/index.html')}&title=Water Usage Quiz&summary=${encodeURIComponent(text)}&source=WaterSavingWebsite`;
-
-    // WhatsApp Share URL
     const whatsappShareUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    const imessageShareUrl = `sms:&body=${encodeURIComponent(text)}`;
 
-    // Update button event listener
-    shareButton.addEventListener('click', () => {
-        // Prompt user to choose where to share
-        const platform = confirm("Click OK to share on WhatsApp, or Cancel to share on LinkedIn.") 
-            ? whatsappShareUrl 
-            : linkedinShareUrl;
-        
-        window.open(platform, '_blank');
-    });
+    shareButton.style.display = 'inline';
+    shareButton.innerHTML = `
+        <button id="whatsappShare">Share on WhatsApp</button>
+        <button id="linkedinShare">Share on LinkedIn</button>
+    `;
 
-    shareButton.style.display = 'inline'; // Show the button after results are displayed
+    const imessageButton = document.createElement('button');
+    imessageButton.id = 'imessageShare';
+    imessageButton.textContent = 'Share via iMessage';
+    imessageButton.onclick = () => window.open(imessageShareUrl, '_blank');
+    shareButton.appendChild(imessageButton);
+
+    document.getElementById('whatsappShare').onclick = () => window.open(whatsappShareUrl, '_blank');
+    document.getElementById('linkedinShare').onclick = () => window.open(linkedinShareUrl, '_blank');
 }
 
-// Call this function in your `calculateWaterUsage` function after displaying results
-setupShareButton(totalWaterUsage, yourGlobalWaterUsage);
 
 
 function submitSuggestion() {

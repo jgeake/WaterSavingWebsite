@@ -75,9 +75,19 @@ button:hover {
     margin: 0; /* Removes extra margin */
 }
 
-.header-container h2,
+.header-container h2, 
 .header-container button {
-    display: inline-block; /* Makes elements appear in the same line */
-    vertical-align: middle; /* Aligns them vertically */
-    margin: 0; /* Removes extra margin */
+    display: inline-block; /* Aligns elements inline */
+    vertical-align: middle; /* Centers them vertically */
+    margin: 0; /* Removes default margin */
 }
+
+<style>
+  #whatsappShare, #linkedinShare {
+      width: 150px;      /* Set button width */
+      height: 50px;      /* Set button height */
+      font-size: 16px;   /* Adjust text size */
+      padding: 10px;     /* Add padding for spacing */
+      border-radius: 5px; /* Optional: make the button corners rounded */
+  }
+</style>

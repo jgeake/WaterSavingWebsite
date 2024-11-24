@@ -1,3 +1,25 @@
+// Initialize Firebase (using modular SDK)
+const app = initializeApp(firebaseConfig);
+
+// Get Firestore reference
+const db = getFirestore(app);
+
+// Firestore collection reference
+const messagesCollection = collection(db, "forumMessages");
+
+// Add a new message to Firestore
+async function addMessage(message) {
+  try {
+    // Add the message to Firestore collection "forumMessages"
+    await addDoc(messagesCollection, {
+      message: message,
+      timestamp: new Date()
+    });
+    console.log("Message successfully added to Firestore!");
+  } catch (e) {
+    console.error("Error adding message: ", e);
+  }
+}
 
 // Event listener for post message button
 document.getElementById('postMessageButton').addEventListener('click', function () {
