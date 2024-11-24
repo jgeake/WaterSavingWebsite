@@ -66,6 +66,31 @@ function buildQuiz() {
     document.getElementById('quiz').innerHTML = output.join('');
 }
 
+document.getElementById("calculateResultsButton").addEventListener("click", () => {
+    // Collect the form data
+    const formData = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        answers: document.getElementById("answers").value.trim(),
+    };
+
+    // Validate the form data
+    if (!formData.name || !formData.email || !formData.answers) {
+        alert("Please fill out all fields before submitting.");
+        return;
+    }
+
+    // Use EmailJS to send the form data
+    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", formData)
+        .then(() => {
+            alert("Email sent successfully!");
+        })
+        .catch((error) => {
+            console.error("Error sending email:", error);
+            alert("Failed to send email. Please try again.");
+        });
+});
+
 function calculateWaterUsage() {
     const answerContainers = document.querySelectorAll('.answers');
     let totalWaterUsage = 0;
