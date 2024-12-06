@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
+    buildQuiz();
+});
+
 const quizQuestions = [
     {
         question: "How many glasses of water do you drink daily?",
