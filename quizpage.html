@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,10 @@
         </div>
         <h2>Calculate Your Daily Water Consumption</h2>
         <h4>Answer the questions below to estimate how much water you consume in a day.</h4>
+
+        <label for="username">Enter your username:</label>
+        <input type="text" id="username" placeholder="Username...">
+
         <div id="quiz"></div>
 
         <!-- Hidden buttons that are shown only after calculation -->
@@ -35,5 +40,8 @@
           <button onclick="window.location.href='index.html'">Home</button>
     </div>
     <script src="js.js"></script>
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
 </body>
 </html>
