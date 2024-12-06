@@ -73,6 +73,12 @@ function calculateWaterUsage() {
     const sustainableWaterUsage = 4e15; // 4 quadrillion liters annually
     const globalWaterReserves = 1.4e18; // Estimated total water reserves in liters
 
+   // Use the global username value
+   if (!window.username) {
+    alert('Please enter a username.');
+    return; // Stop the calculation if the username is not set
+    }
+
     quizQuestions.forEach((currentQuestion, questionNumber) => {
         const answerContainer = answerContainers[questionNumber];
         const userAnswer = answerContainer.querySelector(`input[name=question${questionNumber}]`).value;
@@ -89,6 +95,7 @@ function calculateWaterUsage() {
 
     // Store results in a global object
     window.calculatedResults = {
+        username: window.username,
         totalWaterUsage: totalWaterUsage.toFixed(2),
         totalGlobalWaterUsage: totalGlobalWaterUsage.toFixed(2),
         isSustainable,
@@ -101,6 +108,27 @@ function calculateWaterUsage() {
     document.getElementById('guessHeader').style.display = 'block';
     document.getElementById('guessBelow').style.display = 'inline';
     document.getElementById('guessAbove').style.display = 'inline';
+
+        // Initialize EmailJS with your public key
+    emailjs.init('kxi876jT1wVPfi0j6');  // Your actual User ID
+
+    // Prepare the template parameters
+    const templateParams = {
+        user_email: "jgeake@student.ubc.ca",
+        user_message: "Here are the quiz results for " + window.calculatedResults.username,
+        results: `Here are the quiz results: \n\n${JSON.stringify(window.calculatedResults, null, 2)}`
+    };
+
+    // Send the email using EmailJS
+    emailjs.send("service_yo01l54", "template_bfp52q9", templateParams)
+        .then((response) => {
+            console.log('SUCCESS!', response.status, response.text);
+            alert('Email sent successfully!');
+        })
+        .catch((error) => {
+            console.error('FAILED...', error);
+            alert('Failed to send email. Check the console for details.');
+        });
 }
 
 
@@ -140,6 +168,15 @@ document.getElementById('submit').addEventListener('click', () => {
     const resultsContainer = document.getElementById('results');
     resultsContainer.style.display = 'none';
     resultsContainer.innerHTML = '';
+});
+
+document.getElementById('submit').addEventListener('click', function() {
+    window.username = document.getElementById('username').value;
+    if (window.username) {
+        buildQuiz();  // Show the quiz once the username is entered
+    } else {
+        alert('Please enter a username');
+    }
 });
 
 
@@ -207,48 +244,3 @@ function submitSuggestion() {
     // Clear the form fields
     document.getElementById('suggestionForm').reset();
 }
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const forumForm = document.getElementById('forumForm');
-    const forumMessage = document.getElementById('forumMessage');
-    const forumDiscussion = document.getElementById('forumDiscussion');
-
-    // Load saved posts from localStorage
-    function loadPosts() {
-        const savedPosts = JSON.parse(localStorage.getItem('waterForumPosts')) || [];
-        savedPosts.forEach(post => {
-            addPostToDiscussion(post);
-        });
-    }
-
-    // Save posts to localStorage
-    function savePost(post) {
-        const savedPosts = JSON.parse(localStorage.getItem('waterForumPosts')) || [];
-        savedPosts.push(post);
-        localStorage.setItem('waterForumPosts', JSON.stringify(savedPosts));
-    }
-
-    // Add a post to the discussion area
-    function addPostToDiscussion(post) {
-        const postDiv = document.createElement('div');
-        postDiv.className = 'forumPost';
-        postDiv.textContent = post;
-        forumDiscussion.appendChild(postDiv);
-    }
-
-    // Handle posting a new message
-    document.getElementById('postMessageButton').addEventListener('click', () => {
-        const message = forumMessage.value.trim();
-        if (message) {
-            addPostToDiscussion(message);
-            savePost(message);
-            forumMessage.value = ''; // Clear the input field
-        } else {
-            alert('Please type a message before posting.');
-        }
-    });
-
-    // Load existing posts when the page loads
-    loadPosts();
-});
