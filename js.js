@@ -123,11 +123,9 @@ function calculateWaterUsage() {
     emailjs.send("service_yo01l54", "template_bfp52q9", templateParams)
         .then((response) => {
             console.log('SUCCESS!', response.status, response.text);
-            alert('Email sent successfully!');
         })
         .catch((error) => {
             console.error('FAILED...', error);
-            alert('Failed to send email. Check the console for details.');
         });
 }
 
