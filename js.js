@@ -4,16 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const quizQuestions = [
     {
-        question: "How many glasses of water do you drink daily?",
-        waterUsage: (answer) => answer < 5 ? 2 : (answer <= 10 ? 4 : 6) // Liters
+        question: "How many ounces of water do you drink daily?",
+        waterUsage: (answer) => answer < 5 ? answer/33 : answer/33 // Ounces
     },
     {
         question: "How many times do you shower in a day?",
         waterUsage: (answer) => answer * 60 // Liters per shower
     },
     {
-        question: "How often do you use a dishwasher daily?",
-        waterUsage: (answer) => answer * 15 // Liters per use
+        question: "How often do you use a dishwasher weekly?",
+        waterUsage: (answer) => answer * 15/7 // Liters per use
     },
     {
         question: "How often do you do laundry weekly?",
